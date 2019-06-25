@@ -53,7 +53,7 @@ def category_label(labels, dims, n_labels, ignore_label=None):
 #     return labels
 
 # generator that we will use to read the data from the directory
-def data_gen_small(image_list, label_list, batch_size, dims, n_classes, random_crop=False, resize_nearst=True):
+def data_gen_small(image_list, label_list, batch_size, dims, n_classes, random_crop=False, resize=True):
 
     while True:
         ix = np.random.choice(np.arange(len(image_list)), batch_size)
@@ -74,10 +74,10 @@ def data_gen_small(image_list, label_list, batch_size, dims, n_classes, random_c
                 images.append(crop_image)
                 labels.append(crop_label)
             #resize
-            if resize_nearst:
+            if resize:
                 # images
                 image_path = image_list[i]
-                image = load_img(image_path,target_size=(dims[0], dims[1]))
+                image = load_img(image_path, target_size=(dims[0], dims[1]), interpolation='bilinear'))
                 image = img_to_array(image) / 255
                 images.append(image)
                 # labels
